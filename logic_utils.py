@@ -3,9 +3,10 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
     if difficulty == "Normal":
-        return 1, 100
-    if difficulty == "Hard":
         return 1, 50
+#difficulty level should have higher number than normal
+    if difficulty == "Hard":
+        return 1, 100
     return 1, 100
 
 
@@ -43,16 +44,16 @@ def check_guess(guess, secret):
 #2 issue is here
     try:
         if guess > secret:
-            return "Too High", "📈 Go LOWER!"
+            return "Too High", "📉 Go LOWER!"
         else:
-            return "Too Low", "📉 Go HIGHER!"
+            return "Too Low", "📈 Go HIGHER!"
     except TypeError:
         g = str(guess)
         if g == secret:
             return "Win", "🎉 Correct!"
         if g > secret:
-            return "Too High", "📈 Go LOWER!"
-        return "Too Low", "📉 Go HIGHER!"
+            return "Too High", "📉 Go LOWER!"
+        return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
@@ -64,8 +65,9 @@ def update_score(current_score: int, outcome: str, attempt_number: int):
         return current_score + points
 
     if outcome == "Too High":
-        if attempt_number % 2 == 0:
-            return current_score + 5
+        #penalty is treating unfair for even number so delete 2 blocks 
+        # if attempt_number % 2 == 0:
+        #     return current_score + 5
         return current_score - 5
 
     if outcome == "Too Low":
